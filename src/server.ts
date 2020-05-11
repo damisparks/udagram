@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Response, Request } from "express";
 import bodyParser from "body-parser";
 import { filterImageFromURL, deleteLocalFiles } from "./util/util";
 
@@ -9,7 +9,7 @@ import { filterImageFromURL, deleteLocalFiles } from "./util/util";
   // Set the network port
   const port = process.env.PORT || 8082;
 
-  // Use the body parser middleware for post Requestuests
+  // Use the body parser middleware for post requests
   app.use(bodyParser.json());
 
   // @TODO1 IMPLEMENT A RESTFUL ENDPOINT
@@ -29,29 +29,29 @@ import { filterImageFromURL, deleteLocalFiles } from "./util/util";
   /**************************************************************************** */
 
   //! END @TODO1
-  app.get("/filteredimage", async (Request, Response) => {
-    const image_url = Request.query.image_url;
+  app.get("/filteredimage", async (req : Request , res : Response) => {
+    const image_url : string = req.query.image_url;
     if (!image_url) {
-      Response.status(400).json({
+      res.status(400).json({
         error: `You must specify an image url`,
       });
     }
 
     try {
       const isFilteredImage = await filterImageFromURL(image_url);
-      Response
+      res
         .status(200)
         .sendFile(isFilteredImage, () => deleteLocalFiles([isFilteredImage]));
     } catch (error) {
       console.error(error);
-      Response.status(422).json(`Could not process your request.`);
+      res.status(422).json(`Could not process your request.`);
     }
   });
 
   // Root Endpoint
   // Displays a simple message to the user
-  app.get("/", async (Request, Response) => {
-    Response.send("try GET /filteredimage?image_url={{}}");
+  app.get("/", async (req, res) => {
+    res.send("try GET /filteredimage?image_url={{}}");
   });
 
   // Start the Server
