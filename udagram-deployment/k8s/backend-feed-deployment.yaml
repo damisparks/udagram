@@ -4,6 +4,7 @@ metadata:
   labels:
     service: backend-feed
   name: backend-feed
+  namespace: default
 spec:
   replicas: 1
   selector:
