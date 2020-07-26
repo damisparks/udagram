@@ -1,0 +1,5 @@
+# Ignore sh 
+set_env.sh
+
+# Ignore mac files.
+**/.DS_Store

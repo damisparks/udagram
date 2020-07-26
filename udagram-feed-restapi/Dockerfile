@@ -1,15 +1,14 @@
-FROM node:12
-# Create app directory
+# Use NodeJS base image
+FROM node:13
+
+# Create app directory in Docker
 WORKDIR /usr/src/app
 
-# Copy packages to Docker
+# Copy app from local environment into the Docker image
 COPY package*.json ./
 
-# Install clean dependencies
-RUN npm ci 
-
-# Install bcrypt
-RUN npm install bcrypt 
+# Install a project with a clean slate
+RUN npm ci
 
 # Bundle app source
 COPY . .

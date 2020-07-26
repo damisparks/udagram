@@ -1,0 +1,18 @@
+version: "3"
+services:
+  reverseproxy:
+    build:
+      context: .
+    image: damisparks/reverseproxy 
+  backend_user:
+    build:
+      context: ../../udagram-user-restapi
+    image: damisparks/udagram-user-restapi
+  backend_feed:
+    build:
+      context: ../../udagram-feed-restapi 
+    image: damisparks/udagram-feed-restapi
+  frontend:
+    build:
+      context: ../../udagram-frontend  
+    image: damisparks/udagram-frontend:local
